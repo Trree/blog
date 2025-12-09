@@ -5,6 +5,9 @@ import type { Metadata } from 'next'
 import type { ReactElement } from 'react'
 import { createTranslation } from '../i18n/server'
 import type { LocaleTypes } from '../i18n/settings'
+import { allBlogs } from 'contentlayer/generated'
+import { generateGraphData } from '@/lib/graph-utils'
+import GraphClientWrapper from './graph/GraphClientWrapper'
 
 interface PageProps {
   params: Promise<{
@@ -28,23 +31,52 @@ export default async function Page({ params }: PageProps): Promise<ReactElement>
   const tagKeys = Object.keys(tagCounts)
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
 
+  // 生成图谱数据
+  const posts = allBlogs.filter((post) => post.language === locale)
+  const graphData = generateGraphData(posts)
+
   return (
-    <div className="flex flex-col items-start justify-start divide-y divide-gray-200 md:mt-24 md:flex-row md:items-center md:justify-center md:space-x-6 md:divide-y-0 dark:divide-gray-700">
-      <div className="space-x-2 pt-6 pb-8 md:space-y-5">
-        <h1 className="text-heading-400 dark:text-heading-400 text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl sm:leading-10 md:border-r-2 md:px-6 md:text-6xl md:leading-14">
-          Tags
-        </h1>
+    <div className="divide-y divide-gray-200 dark:divide-gray-700">
+      {/* 标签列表 - 紧凑设计 */}
+      <div className="space-y-3 pt-6 pb-6">
+        <div className="flex items-baseline justify-between">
+          <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl md:text-4xl dark:text-gray-100">
+            {locale === 'zh' ? '标签' : 'Tags'}
+          </h1>
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            {tagKeys.length} {locale === 'zh' ? '个标签' : 'tags'}
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {tagKeys.length === 0 && (
+            <p className="text-gray-500 dark:text-gray-400">
+              {locale === 'zh' ? '暂无标签' : 'No tags found.'}
+            </p>
+          )}
+          {sortedTags.map((tag) => (
+            <div key={tag} className="flex items-baseline gap-1">
+              <Tag text={tag} />
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                {tagCounts[tag]}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="flex max-w-lg flex-wrap">
-        {tagKeys.length === 0 && 'No tags found.'}
-        {sortedTags.map((tag) => (
-          <div key={tag} className="mt-2 mr-5 mb-2">
-            <Tag text={tag} />
-            <span className="-ml-2 text-sm font-semibold text-gray-600 uppercase dark:text-gray-300">
-              {`(${tagCounts[tag]})`}
-            </span>
-          </div>
-        ))}
+
+      {/* 关系图谱 */}
+      <div className="py-8">
+        <div className="mb-4">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+            {locale === 'zh' ? '关系图谱' : 'Relationship Graph'}
+          </h2>
+          <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">
+            {locale === 'zh'
+              ? '通过共享标签可视化展示文章之间的联系'
+              : 'Visualize connections between posts through shared tags'}
+          </p>
+        </div>
+        <GraphClientWrapper graphData={graphData} locale={locale} />
       </div>
     </div>
   )
