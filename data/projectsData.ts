@@ -29,19 +29,18 @@ const projectsData: ProjectsData = {
     },
   ],
 
-  fr: [
+  zh: [
     {
-      title: 'Un moteur de recherche',
-      description: `Et si vous pouviez rechercher n'importe quelle information dans le monde ? Pages Web, images, vidéos
-        et plus. Google propose de nombreuses fonctionnalités pour vous aider à trouver exactement ce que vous cherchez.`,
+      title: '搜索引擎',
+      description: `如果你可以查找世界上的任何信息会怎样？网页、图片、视频等等。
+        Google 有许多功能可以帮助你准确找到你要找的内容。`,
       imgSrc: '/static/images/google.png',
       href: 'https://www.google.com',
     },
     {
-      title: 'La Machine à remonter le temps',
-      description: `Imaginez pouvoir voyager dans le temps ou vers le futur. Tournez simplement le bouton
-        à la date souhaitée et appuyez sur "Go". Ne vous inquiétez plus des clés perdues ou
-        écouteurs oubliés avec cette solution simple mais abordable.`,
+      title: '时光机',
+      description: `想象一下能够穿越到过去或未来。只需将旋钮转到所需的日期，然后按"Go"。
+        使用这个简单而实惠的解决方案，不再担心丢失钥匙或忘记耳机。`,
       imgSrc: '/static/images/time-machine.jpg',
       href: '/blog/the-time-machine',
     },

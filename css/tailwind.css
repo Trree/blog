@@ -11,17 +11,17 @@
 
   --font-family-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
 
-  --color-primary-50: #fdf2f8;
-  --color-primary-100: #fce7f3;
-  --color-primary-200: #fbcfe8;
-  --color-primary-300: #f9a8d4;
-  --color-primary-400: #f472b6;
-  --color-primary-500: #ec4899;
-  --color-primary-600: #db2777;
-  --color-primary-700: #be185d;
-  --color-primary-800: #9d174d;
-  --color-primary-900: #831843;
-  --color-primary-950: #500724;
+  --color-primary-50: #eef0ff;
+  --color-primary-100: #d8dcff;
+  --color-primary-200: #b1b9ff;
+  --color-primary-300: #7a86f5;
+  --color-primary-400: #4350e3;
+  --color-primary-500: #1519d1;
+  --color-primary-600: #1214b3;
+  --color-primary-700: #0f1095;
+  --color-primary-800: #0d0e7a;
+  --color-primary-900: #0a0c65;
+  --color-primary-950: #050740;
 
   --color-heading-50: #eff6ff;
   --color-heading-100: #dbeafe;
