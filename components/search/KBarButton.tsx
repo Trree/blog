@@ -7,8 +7,10 @@ import React, {
   type ReactNode,
 } from 'react'
 
-interface KbarButtonProps
-  extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+interface KbarButtonProps extends DetailedHTMLProps<
+  HTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> {
   children: ReactNode
 }
 

@@ -1,4 +1,4 @@
-import { Blog } from 'contentlayer/generated'
+import type { Blog } from 'contentlayer/generated'
 
 export interface GraphNode {
   id: string

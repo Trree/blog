@@ -2,8 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import GraphView from '@/components/graph/GraphView'
-import type { GraphData } from '@/lib/graph-utils'
-import { filterGraphByTag } from '@/lib/graph-utils'
+import { filterGraphByTag, type GraphData } from '@/lib/graph-utils'
 import type { LocaleTypes } from '../../i18n/settings'
 
 interface GraphClientWrapperProps {
@@ -93,7 +92,12 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
             <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
-              <svg className="h-5 w-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="text-primary-500 h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -107,7 +111,13 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
               onClick={() => setShowControls(!showControls)}
               className="rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
             >
-              {showControls ? (locale === 'zh' ? '收起' : 'Collapse') : (locale === 'zh' ? '展开' : 'Expand')}
+              {showControls
+                ? locale === 'zh'
+                  ? '收起'
+                  : 'Collapse'
+                : locale === 'zh'
+                  ? '展开'
+                  : 'Expand'}
             </button>
           </div>
 
@@ -116,11 +126,16 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
             <div className="mb-2 flex items-center justify-between">
               <label className="flex items-center gap-1.5 text-xs font-medium text-gray-700 dark:text-gray-300">
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
                 </svg>
                 {locale === 'zh' ? '力强度' : 'Force Strength'}
               </label>
-              <span className="font-mono text-xs font-bold text-primary-600 dark:text-primary-400">
+              <span className="text-primary-600 dark:text-primary-400 font-mono text-xs font-bold">
                 {forceStrength.toFixed(1)}
               </span>
             </div>
@@ -137,7 +152,7 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
                   rgb(239, 68, 68) 0%,
                   rgb(156, 163, 175) ${((forceStrength + 30) / 60) * 100}%,
                   rgb(156, 163, 175) ${((forceStrength + 30) / 60) * 100}%,
-                  rgb(34, 197, 94) 100%)`
+                  rgb(34, 197, 94) 100%)`,
               }}
             />
             <div className="mt-1.5 flex justify-between text-[10px] text-gray-500 dark:text-gray-400">
@@ -181,7 +196,7 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
                 </button>
               )}
             </div>
-            {selectedTag && (
+            {selectedTag ? (
               <div className="mt-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -193,12 +208,12 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
                 </svg>
                 {locale === 'zh' ? `筛选: ${selectedTag}` : `Filter: ${selectedTag}`}
               </div>
-            )}
+            ) : null}
           </div>
         </div>
 
         {/* 面板内容 - 高级控制 */}
-        {showControls && (
+        {showControls ? (
           <div className="space-y-6 border-t border-gray-200/50 p-6 dark:border-gray-700/50">
             {/* 所有标签选择器 */}
             <div>
@@ -279,7 +294,7 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
                   </svg>
                   {locale === 'zh' ? '力强度' : 'Force Strength'}
                 </span>
-                <span className="font-mono text-xs text-primary-600 dark:text-primary-400">
+                <span className="text-primary-600 dark:text-primary-400 font-mono text-xs">
                   {forceStrength.toFixed(2)}
                 </span>
               </label>
@@ -298,7 +313,7 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
                       rgb(239, 68, 68) 0%,
                       rgb(156, 163, 175) ${((forceStrength + 30) / 60) * 100}%,
                       rgb(156, 163, 175) ${((forceStrength + 30) / 60) * 100}%,
-                      rgb(34, 197, 94) 100%)`
+                      rgb(34, 197, 94) 100%)`,
                   }}
                 />
                 <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
@@ -351,7 +366,7 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
               </p>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
 
       {/* 图谱视图 */}
@@ -366,7 +381,12 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900">
         <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-gray-700">
           <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
-            <svg className="h-5 w-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="text-primary-500 h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -386,48 +406,54 @@ export default function GraphClientWrapper({ graphData, locale }: GraphClientWra
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </button>
         </div>
-        {showLegend && (
+        {showLegend ? (
           <div className="grid gap-3 p-4 text-sm md:grid-cols-2">
-          {[
-            {
-              title: locale === 'zh' ? '布局算法' : 'Layout Algorithm',
-              desc: locale === 'zh' ? 'Barnes-Hut 自动力导向' : 'Barnes-Hut force-directed',
-            },
-            {
-              title: locale === 'zh' ? '节点大小' : 'Node Size',
-              desc: locale === 'zh' ? '标签数量越多节点越大' : 'More tags = larger nodes',
-            },
-            {
-              title: locale === 'zh' ? '节点颜色' : 'Node Color',
-              desc: locale === 'zh' ? '根据标签分组着色' : 'Colored by tag groups',
-            },
-            {
-              title: locale === 'zh' ? '连线' : 'Edges',
-              desc: locale === 'zh' ? '表示文章间的标签关联' : 'Shows tag relationships',
-            },
-            {
-              title: locale === 'zh' ? '交互' : 'Interactions',
-              desc: locale === 'zh' ? '单击查看，双击跳转，拖拽移动' : 'Click, double-click, drag',
-            },
-            {
-              title: locale === 'zh' ? '优化' : 'Optimization',
-              desc: locale === 'zh' ? '自动避免节点重叠' : 'Auto overlap prevention',
-            },
-          ].map((item, idx) => (
-            <div key={idx} className="flex items-start gap-2">
-              <div className="mt-0.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary-500"></div>
-              <div>
-                <div className="font-medium text-gray-900 dark:text-gray-100">{item.title}</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">{item.desc}</div>
+            {[
+              {
+                title: locale === 'zh' ? '布局算法' : 'Layout Algorithm',
+                desc: locale === 'zh' ? 'Barnes-Hut 自动力导向' : 'Barnes-Hut force-directed',
+              },
+              {
+                title: locale === 'zh' ? '节点大小' : 'Node Size',
+                desc: locale === 'zh' ? '标签数量越多节点越大' : 'More tags = larger nodes',
+              },
+              {
+                title: locale === 'zh' ? '节点颜色' : 'Node Color',
+                desc: locale === 'zh' ? '根据标签分组着色' : 'Colored by tag groups',
+              },
+              {
+                title: locale === 'zh' ? '连线' : 'Edges',
+                desc: locale === 'zh' ? '表示文章间的标签关联' : 'Shows tag relationships',
+              },
+              {
+                title: locale === 'zh' ? '交互' : 'Interactions',
+                desc:
+                  locale === 'zh' ? '单击查看，双击跳转，拖拽移动' : 'Click, double-click, drag',
+              },
+              {
+                title: locale === 'zh' ? '优化' : 'Optimization',
+                desc: locale === 'zh' ? '自动避免节点重叠' : 'Auto overlap prevention',
+              },
+            ].map((item, idx) => (
+              <div key={idx} className="flex items-start gap-2">
+                <div className="bg-primary-500 mt-0.5 h-1.5 w-1.5 flex-shrink-0 rounded-full" />
+                <div>
+                  <div className="font-medium text-gray-900 dark:text-gray-100">{item.title}</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">{item.desc}</div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-        )}
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   )
