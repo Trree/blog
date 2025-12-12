@@ -82,15 +82,16 @@ export default function ListLayoutWithTags({
 
   const handleTagClick = useCallback(
     (tag: string) => {
-      setSelectedTag(tag === useTagStore.getState().selectedTag ? '' : tag)
+      setSelectedTag(selectedTag === tag ? '' : tag)
       setCurrentPage(1)
     },
-    [setSelectedTag]
+    [selectedTag, setSelectedTag, setCurrentPage]
   )
 
   const handleClearTag = useCallback(() => {
     setSelectedTag('')
-  }, [setSelectedTag])
+    setCurrentPage(1)
+  }, [setSelectedTag, setCurrentPage])
 
   const tagCountMap = tagData[locale]
 
@@ -102,105 +103,143 @@ export default function ListLayoutWithTags({
   )
 
   const filteredTags = Object.keys(tagCountMap).map((postTag) => {
+    const isActive = selectedTag === postTag
     return (
-      <li key={postTag} className="my-3">
+      <li key={postTag}>
         <button
           onClick={createTagClickHandler(postTag)}
           aria-labelledby={`${t('poststagged')} ${postTag}`}
+          className={`w-full rounded-2xl border px-3 py-2 text-left text-sm font-semibold uppercase tracking-wide transition ${
+            isActive
+              ? 'border-primary-400/70 bg-primary-500/10 text-primary-600 dark:text-primary-200'
+              : 'border-gray-200/70 text-gray-600 hover:border-primary-200 hover:text-primary-500 dark:border-white/10 dark:text-gray-200'
+          }`}
         >
-          <h3
-            className={`inline cursor-pointer px-3 py-2 text-sm font-medium uppercase ${
-              useTagStore.getState().selectedTag === postTag
-                ? 'text-primary-500'
-                : 'hover:text-primary-500 dark:hover:text-primary-500 text-gray-500 dark:text-gray-300'
-            }`}
-          >
-            {' '}
-            {postTag} ({tagCountMap[postTag]})
-          </h3>
+          <span className="flex items-center justify-between">
+            <span>{postTag}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              {tagCountMap[postTag]}
+            </span>
+          </span>
         </button>
       </li>
     )
   })
 
   return (
-    <div>
-      <div className="pt-6 pb-6">
-        <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
-          {title}
-        </h1>
-      </div>
-      <div className="flex sm:space-x-24">
-        <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded bg-gray-50 pt-5 shadow-md sm:flex dark:bg-gray-900/70 dark:shadow-gray-800/40">
-          <div className="px-6 py-4">
+    <div className="space-y-8">
+      <div className="rounded-3xl border border-white/30 bg-white/80 px-6 py-8 shadow-glow backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.04] sm:px-10">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.5em] text-gray-500 dark:text-gray-400">
+              {t('searchposts')}
+            </p>
+            <h1 className="text-4xl font-semibold text-gray-900 dark:text-white">{title}</h1>
+          </div>
+          {selectedTag ? (
             <button
               onClick={handleClearTag}
-              className={`${useTagStore.getState().selectedTag === '' ? 'text-heading-500 dark:text-heading-400' : 'text-gray-500 dark:text-gray-400'} cursor-pointer font-bold uppercase`}
+              className="inline-flex items-center gap-2 rounded-full border border-primary-500/50 px-4 py-2 text-sm font-semibold text-primary-600 transition hover:border-primary-500 dark:text-primary-200"
+            >
+              {selectedTag}
+              <span aria-hidden="true">×</span>
+            </button>
+          ) : null}
+        </div>
+      </div>
+      <div className="flex flex-col gap-8 lg:flex-row">
+        <aside className="order-2 flex w-full flex-col gap-4 rounded-3xl border border-white/30 bg-white/80 px-5 py-6 shadow-glow backdrop-blur dark:border-white/10 dark:bg-white/[0.04] lg:order-1 lg:w-80">
+          <div className="flex items-center justify-between">
+            <p className="text-xs uppercase tracking-[0.5em] text-gray-500 dark:text-gray-400">
+              {t('poststagged')}
+            </p>
+            <button
+              onClick={handleClearTag}
+              className={`text-xs font-semibold uppercase tracking-wide ${
+                selectedTag ? 'text-primary-500' : 'text-gray-500 dark:text-gray-400'
+              }`}
             >
               {t('all')}
             </button>
-            <ul>{filteredTags}</ul>
           </div>
-        </div>
-        <div>
-          <motion.ul variants={container} initial="hidden" animate="show">
+          <ul className="space-y-2">{filteredTags}</ul>
+        </aside>
+        <div className="order-1 flex-1 lg:order-2">
+          <motion.ul
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="grid gap-6 md:grid-cols-2"
+          >
             {displayPosts.map((post) => {
               const slug = post.slug as string
               const date = post.date as string
-              const title = post.title as string
+              const postTitle = post.title as string
               const summary = post.summary as string | undefined
               const tags = post.tags as string[]
               const language = post.language as string
 
               if (language === locale) {
                 return (
-                  <motion.li variants={item} key={slug} className="py-5">
-                    <article className="flex flex-col space-y-2 xl:space-y-0">
-                      <dl>
-                        <dt className="sr-only">{t('pub')}</dt>
-                        <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                          <time dateTime={date}>{formatDate(date, language)}</time>
-                        </dd>
-                      </dl>
-                      <div className="space-y-3">
+                  <motion.li variants={item} key={slug} className="h-full">
+                    <article className="group relative flex h-full flex-col justify-between rounded-3xl border border-white/20 bg-white/80 p-6 shadow-glow transition hover:-translate-y-1 hover:border-primary-300/60 dark:border-white/[0.08] dark:bg-white/[0.04]">
+                      <div
+                        className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100"
+                        aria-hidden="true"
+                      />
+                      <dl className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                         <div>
-                          <div className="text-2xl leading-8 font-bold tracking-tight">
-                            <Link
-                              href={`/${locale}/blog/${slug}`}
-                              className="text-gray-900 dark:text-gray-100"
-                              aria-labelledby={title}
-                            >
-                              <h2>{title}</h2>
-                            </Link>
-                          </div>
-                          <ul className="flex flex-wrap">
-                            {tags.map((t) => (
-                              <li key={t} className="my-3">
-                                <button
-                                  onClick={createTagClickHandler(t)}
-                                  className={`${
-                                    useTagStore.getState().selectedTag === t
-                                      ? 'text-heading-500 dark:text-heading-400'
-                                      : 'text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-500'
-                                  } mr-3 cursor-pointer text-sm font-medium uppercase`}
-                                  aria-label={`View posts tagged ${t}`}
-                                >
-                                  {`${t}`}
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
+                          <dt className="sr-only">{t('pub')}</dt>
+                          <dd>
+                            <time dateTime={date}>{formatDate(date, language)}</time>
+                          </dd>
                         </div>
-                        <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                        <div className="text-xs uppercase tracking-[0.4em] text-gray-400">
+                          {tags[0] ?? t('all')}
+                        </div>
+                      </dl>
+                      <div className="mt-5 flex-1 space-y-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                          <Link href={`/${locale}/blog/${slug}`}>{postTitle}</Link>
+                        </h2>
+                        <div className="text-gray-600 dark:text-gray-300">
                           {summary && summary.length > 149
                             ? `${summary.substring(0, 149)}...`
                             : summary}
                         </div>
+                        <ul className="flex flex-wrap gap-2">
+                          {tags.map((tLabel) => (
+                            <li key={tLabel}>
+                              <button
+                                onClick={createTagClickHandler(tLabel)}
+                                className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide transition ${
+                                  selectedTag === tLabel
+                                    ? 'border-primary-500/60 bg-primary-500/10 text-primary-600 dark:text-primary-200'
+                                    : 'border-gray-200/60 text-gray-600 hover:border-primary-300 hover:text-primary-500 dark:border-white/10 dark:text-gray-200'
+                                }`}
+                                aria-label={`View posts tagged ${tLabel}`}
+                              >
+                                {tLabel}
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="mt-6 flex items-center justify-between text-sm font-semibold">
+                        <Link
+                          href={`/${locale}/blog/${slug}`}
+                          className="inline-flex items-center gap-2 text-gray-900 hover:text-primary-500 dark:text-gray-100"
+                          aria-label={`${t('more')}"${postTitle}"`}
+                        >
+                          {t('more')}
+                          <span aria-hidden="true">→</span>
+                        </Link>
                       </div>
                     </article>
                   </motion.li>
                 )
               }
+              return null
             })}
           </motion.ul>
           {totalPages > 1 && (

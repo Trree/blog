@@ -22,7 +22,7 @@ const Tag = ({ text }: Props): React.JSX.Element => {
     <Link
       href={`/${locale}/blog`}
       onClick={handleClick}
-      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 cursor-pointer text-sm font-medium uppercase"
+      className="inline-flex items-center rounded-full border border-gray-200/70 bg-white/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-600 transition hover:border-primary-500 hover:text-primary-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-gray-200 dark:hover:border-primary-400 dark:hover:text-primary-200"
     >
       {text.split(' ').join('-')}
     </Link>

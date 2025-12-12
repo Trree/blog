@@ -7,12 +7,13 @@ interface LayoutHeaderProps {
 
 const LayoutHeader: React.FC<LayoutHeaderProps> = ({ title, description }) => {
   return (
-    <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-      <h1 className="text-heading-400 dark:text-heading-400 text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-        {title}
-      </h1>
+    <div className="space-y-3">
+      <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.5em] text-gray-500 dark:text-gray-400">
+        <span className="h-px w-12 bg-gradient-to-r from-primary-500 to-accent-400" />
+        <span>{title}</span>
+      </div>
       {description ? (
-        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">{description}</p>
+        <p className="text-2xl font-semibold text-gray-900 dark:text-white">{description}</p>
       ) : null}
     </div>
   )

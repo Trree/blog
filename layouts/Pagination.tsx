@@ -31,23 +31,35 @@ export default function Pagination({
   }, [nextPage, currentPage, onPageChange])
 
   return (
-    <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-      <nav className="flex justify-between">
-        {!prevPage && (
-          <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-            {t('prevp')}
-          </button>
-        )}
-        {prevPage ? <button onClick={handlePrevPage}>{t('prevp')}</button> : null}
-        <span>
-          {currentPage} of {totalPages}
+    <div className="mt-10">
+      <nav className="flex items-center justify-between rounded-full border border-white/30 bg-white/80 px-4 py-3 text-sm font-semibold shadow-glow backdrop-blur dark:border-white/10 dark:bg-white/[0.04]">
+        <button
+          onClick={handlePrevPage}
+          disabled={!prevPage}
+          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 transition ${
+            prevPage
+              ? 'text-gray-900 hover:text-primary-500 dark:text-white'
+              : 'cursor-not-allowed text-gray-400 dark:text-gray-500'
+          }`}
+        >
+          <span aria-hidden="true">←</span>
+          {t('prevp')}
+        </button>
+        <span className="text-xs uppercase tracking-[0.5em] text-gray-500 dark:text-gray-400">
+          {currentPage} {t('of')} {totalPages}
         </span>
-        {!nextPage && (
-          <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-            {t('nextp')}
-          </button>
-        )}
-        {nextPage ? <button onClick={handleNextPage}>{t('nextp')}</button> : null}
+        <button
+          onClick={handleNextPage}
+          disabled={!nextPage}
+          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 transition ${
+            nextPage
+              ? 'text-gray-900 hover:text-primary-500 dark:text-white'
+              : 'cursor-not-allowed text-gray-400 dark:text-gray-500'
+          }`}
+        >
+          {t('nextp')}
+          <span aria-hidden="true">→</span>
+        </button>
       </nav>
     </div>
   )

@@ -62,7 +62,7 @@ const MobileNav = (): JSX.Element => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          className="h-8 w-8 text-gray-900 dark:text-gray-100"
+          className="h-8 w-8 text-gray-800 dark:text-gray-100"
         >
           <path
             fillRule="evenodd"
@@ -72,7 +72,7 @@ const MobileNav = (): JSX.Element => {
         </svg>
       </button>
       <div
-        className={`fixed top-0 left-0 z-10 my-auto h-full w-full transform overflow-y-auto bg-white opacity-95 duration-300 ease-in-out dark:bg-gray-950 dark:opacity-[0.98] ${
+        className={`fixed top-0 left-0 z-50 h-full w-full transform overflow-y-auto bg-white/90 backdrop-blur-2xl transition duration-300 ease-in-out dark:bg-gray-950/95 ${
           navShow ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -95,12 +95,15 @@ const MobileNav = (): JSX.Element => {
             </svg>
           </button>
         </div>
-        <nav className="fixed mt-8 h-full">
+        <nav className="fixed mt-16 flex h-full w-full flex-col gap-4 px-8">
           {headerNavLinks.map((link) => (
-            <div key={link.title} className="px-12 py-4">
+            <div
+              key={link.title}
+              className="rounded-3xl border border-white/40 bg-white/80 px-6 py-4 shadow-glow dark:border-white/10 dark:bg-white/[0.06]"
+            >
               <Link
                 href={`/${locale}${link.href}`}
-                className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+                className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white"
                 onClick={useCallback(() => onToggleNav(), [onToggleNav])}
               >
                 {t(`${link.title.toLowerCase()}`)}
@@ -111,7 +114,7 @@ const MobileNav = (): JSX.Element => {
             <>
               <button
                 type="button"
-                className="flex w-full items-center justify-between px-12 py-4 text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+                className="flex w-full items-center justify-between rounded-3xl border border-white/40 bg-white/80 px-6 py-4 text-2xl font-semibold text-gray-900 shadow-glow dark:border-white/10 dark:bg-white/[0.05] dark:text-gray-100"
                 onClick={useCallback(() => toggleAccordion(), [toggleAccordion])}
               >
                 <div>{t('about')}:</div>
@@ -128,7 +131,7 @@ const MobileNav = (): JSX.Element => {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: accordionOpen ? 'auto' : 0, opacity: accordionOpen ? 1 : 0 }}
                 transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                className="overflow-hidden"
+                className="overflow-hidden rounded-2xl border border-white/30 bg-white/80 shadow-innerGlow dark:border-white/10 dark:bg-white/[0.04]"
               >
                 {authors.map((author) => {
                   const { name, avatar, language, slug } = author
@@ -136,7 +139,7 @@ const MobileNav = (): JSX.Element => {
                     return (
                       <button
                         key={name}
-                        className="group flex w-full items-center rounded-md px-12 py-4 text-sm"
+                        className="group flex w-full items-center justify-between px-6 py-3"
                       >
                         <div className="mr-2">
                           <Image
@@ -151,7 +154,7 @@ const MobileNav = (): JSX.Element => {
                         <Link
                           href={`/${locale}/about/${slug}`}
                           onClick={useCallback(() => onToggleNav(), [onToggleNav])}
-                          className="text-xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+                          className="text-xl font-semibold text-gray-900 dark:text-gray-100"
                         >
                           {name}
                         </Link>
@@ -164,7 +167,7 @@ const MobileNav = (): JSX.Element => {
             </>
           ) : null}
           {siteMetadata.multiauthors === false && (
-            <div className="px-12 py-4 text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100">
+            <div className="rounded-3xl border border-white/40 bg-white/80 px-6 py-4 text-2xl font-semibold text-gray-900 shadow-glow dark:border-white/10 dark:bg-white/[0.05] dark:text-gray-100">
               {mainAuthor.map((author) => {
                 const { name, language, slug } = author
                 if (language === locale) {
@@ -173,6 +176,7 @@ const MobileNav = (): JSX.Element => {
                       href={`/${locale}/about/${slug}`}
                       onClick={useCallback(() => onToggleNav(), [onToggleNav])}
                       key={name}
+                      className="block"
                     >
                       {t('about')}
                     </Link>

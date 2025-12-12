@@ -68,8 +68,10 @@ const AuthorsMenu = ({ className }: AuthorsMenuProps): JSX.Element => {
           {({ focus }) => (
             <div
               className={`${
-                focus ? 'bg-gray-100 dark:bg-gray-600' : 'hover:bg-gray-100 dark:hover:bg-gray-600'
-              } group hover:text-primary-500 dark:hover:text-primary-500 flex w-full cursor-pointer items-center rounded-md px-2 py-2 text-sm`}
+                focus
+                  ? 'bg-gray-100/80 dark:bg-white/[0.08]'
+                  : 'hover:bg-gray-100/70 dark:hover:bg-white/[0.05]'
+              } flex w-full cursor-pointer items-center rounded-xl px-3 py-2 text-sm text-gray-600 transition dark:text-gray-200`}
             >
               <div className="mr-2">
                 <Image
@@ -84,6 +86,7 @@ const AuthorsMenu = ({ className }: AuthorsMenuProps): JSX.Element => {
               <Link
                 href={`/${locale}/about/${slug}`}
                 onClick={useCallback(() => closeMenu(), [closeMenu])}
+                className="font-semibold text-gray-800 dark:text-gray-100"
               >
                 {name}
               </Link>
@@ -96,30 +99,30 @@ const AuthorsMenu = ({ className }: AuthorsMenuProps): JSX.Element => {
 
   return siteMetadata.multiauthors ? (
     <div ref={menubarRef} className={className}>
-      <Menu as="div" className="relative inline-block text-left leading-5 font-medium">
-        <div>
-          <MenuButton
-            className="flex transform-gpu cursor-pointer items-center space-x-1 transition-transform duration-300"
-            onClick={useCallback(() => toggleMenu(), [toggleMenu])}
-          >
-            <div
-              className={`hidden font-medium ${
-                isSelected
-                  ? 'text-heading-500'
-                  : 'text-gray-500 hover:text-gray-900 dark:hover:text-gray-100'
-              } relative rounded-md px-2 py-1 font-medium transition-colors sm:block`}
-            >
-              <span className="relative z-10">{t('about')}</span>
-              {isSelected ? (
-                <motion.span
-                  layoutId="tab"
-                  transition={{ type: 'spring', duration: 0.4 }}
-                  className="absolute inset-0 z-0 rounded-md bg-gray-100 dark:bg-gray-600"
-                />
-              ) : null}
-            </div>
-          </MenuButton>
-        </div>
+      <Menu as="div" className="relative inline-block text-left font-medium">
+        <MenuButton
+          className={`group relative hidden overflow-hidden rounded-full border px-4 py-2 text-sm font-semibold transition-colors sm:flex ${
+            isSelected
+              ? 'border-transparent text-white'
+              : 'border-gray-200/70 text-gray-600 hover:text-gray-900 dark:border-white/10 dark:text-gray-300 dark:hover:text-white'
+          }`}
+          onClick={useCallback(() => toggleMenu(), [toggleMenu])}
+        >
+          <span className="relative z-10">{t('about')}</span>
+          {isSelected ? (
+            <motion.span
+              layoutId="author-tab"
+              transition={{ type: 'spring', duration: 0.45 }}
+              className="absolute inset-0 z-0 bg-gradient-to-r from-primary-500 to-accent-500 opacity-90"
+              aria-hidden="true"
+            />
+          ) : (
+            <span
+              className="absolute inset-0 z-0 bg-white/60 transition-opacity dark:bg-white/[0.03]"
+              aria-hidden="true"
+            />
+          )}
+        </MenuButton>
         <Transition
           show={isOpen}
           enter="transition-all ease-out duration-300"
@@ -129,18 +132,16 @@ const AuthorsMenu = ({ className }: AuthorsMenuProps): JSX.Element => {
           leaveFrom="opacity-100 scale-100 translate-y-0"
           leaveTo="opacity-0 scale-95 translate-y-[10px]"
         >
-          <div>
-            <MenuItems
-              className="ring-opacity-5 absolute right-0 z-50 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black focus:outline-none dark:bg-gray-800"
-              as="div"
-            >
-              <RadioGroup>
-                <div className="p-1">
-                  {authors.map((author) => author.language === locale && renderAuthorLink(author))}
-                </div>
-              </RadioGroup>
-            </MenuItems>
-          </div>
+          <MenuItems
+            as="div"
+            className="absolute right-0 z-50 mt-3 w-52 origin-top-right rounded-2xl border border-gray-200/80 bg-white/90 shadow-glow backdrop-blur-lg focus:outline-none dark:border-white/10 dark:bg-gray-900/80"
+          >
+            <RadioGroup>
+              <div className="p-2">
+                {authors.map((author) => author.language === locale && renderAuthorLink(author))}
+              </div>
+            </RadioGroup>
+          </MenuItems>
         </Transition>
       </Menu>
     </div>
@@ -152,20 +153,26 @@ const AuthorsMenu = ({ className }: AuthorsMenuProps): JSX.Element => {
           <Link
             href={`/${locale}/about/${slug}`}
             key={name}
-            className={`${
+            className={`relative hidden overflow-hidden rounded-full border px-4 py-2 text-sm font-semibold transition-colors sm:flex ${
               isSelected
-                ? 'text-white'
-                : 'text-gray-500 hover:text-gray-900 dark:hover:text-gray-100'
-            } relative rounded-md px-2 py-1 font-medium transition-colors sm:block`}
+                ? 'border-transparent text-white'
+                : 'border-gray-200/70 text-gray-600 hover:text-gray-900 dark:border-white/10 dark:text-gray-300 dark:hover:text-white'
+            }`}
           >
             <span className="relative z-10">{t('about')}</span>
             {isSelected ? (
               <motion.span
-                layoutId="tab"
-                transition={{ type: 'spring', duration: 0.4 }}
-                className="bg-heading-500 absolute inset-0 z-0 rounded-md"
+                layoutId="author-tab"
+                transition={{ type: 'spring', duration: 0.45 }}
+                className="absolute inset-0 z-0 bg-gradient-to-r from-primary-500 to-accent-500 opacity-90"
+                aria-hidden="true"
               />
-            ) : null}
+            ) : (
+              <span
+                className="absolute inset-0 z-0 bg-white/70 dark:bg-white/[0.03]"
+                aria-hidden="true"
+              />
+            )}
           </Link>
         )
       })}

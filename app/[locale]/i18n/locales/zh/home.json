@@ -3,6 +3,9 @@
   "description": "Un blog crée grâce à Next.js, i18n et Tailwind.css",
   "more": "Lire la suite",
   "all": "Tous les articles",
+  "statsPosts": "已发布文章",
+  "statsTopics": "探索主题",
+  "ctaProjects": "查看项目",
 
   "moreaboutme": "Plus à mon sujet",
 

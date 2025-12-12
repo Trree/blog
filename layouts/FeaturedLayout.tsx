@@ -28,9 +28,9 @@ export default async function FeaturedLayout({
 }: HomeProps): Promise<React.JSX.Element> {
   const { t } = await createTranslation(locale, 'home')
   return (
-    <div className="divide-y divide-gray-200 dark:divide-gray-700">
+    <section className="space-y-6 rounded-3xl border border-white/30 bg-white/80 px-6 py-8 shadow-glow backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.04] sm:px-10">
       <LayoutHeader title={t('featured')} />
       <PostList posts={posts} locale={locale} t={t} maxDisplay={MAX_DISPLAY} />
-    </div>
+    </section>
   )
 }

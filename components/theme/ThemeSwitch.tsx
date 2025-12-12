@@ -80,7 +80,7 @@ const ThemeSwitch = (): React.JSX.Element | null => {
   if (!mounted) return null
 
   return (
-    <div ref={menubarRef} className="mr-5">
+    <div ref={menubarRef} className="flex items-center">
       <Menu as="div" className="relative mt-1 inline-block text-left">
         <MenuButton aria-label={t('theme')}>
           <DarkModeSwitch

@@ -105,16 +105,20 @@ export default async function RootLayout({
       <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0f18" />
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-      <body className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
+      <body className="pl-[calc(100vw-100%)] font-sans text-slate-900 antialiased selection:bg-primary-200/70 selection:text-primary-900 dark:text-white">
         <TwSizeIndicator />
         <ThemeProvider>
           <ThemeScript />
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
-            <div className="flex h-screen flex-col justify-between font-sans">
+            <div className="relative isolate flex min-h-screen flex-col gap-12 py-8 sm:py-10 lg:py-12">
+              <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 flex justify-center">
+                <span className="h-40 w-40 rounded-full bg-primary-400/40 blur-[120px] sm:h-64 sm:w-64 lg:h-72 lg:w-72" />
+              </div>
+              <span className="pointer-events-none absolute -bottom-12 right-0 -z-10 h-40 w-40 rounded-full bg-accent-400/20 blur-[140px] sm:h-56 sm:w-56 lg:h-64 lg:w-64" />
               <SearchProvider>
                 <Header />
-                <main className="mb-auto">{children}</main>
+                <main className="flex-1">{children}</main>
               </SearchProvider>
               <Footer />
             </div>
