@@ -121,6 +121,72 @@ export const Series = defineNestedType(() => ({
   },
 }))
 
+// Kanban Task 文档类型
+export const KanbanTask = defineDocumentType(() => ({
+  name: 'KanbanTask',
+  filePathPattern: 'kanban/tasks/**/*.mdx',
+  contentType: 'mdx',
+  fields: {
+    title: { type: 'string', required: true },
+    status: {
+      type: 'enum',
+      options: ['todo', 'in-progress', 'done'],
+      required: true,
+      default: 'todo'
+    },
+    priority: {
+      type: 'enum',
+      options: ['low', 'medium', 'high'],
+      default: 'medium'
+    },
+    tags: { type: 'list', of: { type: 'string' }, default: [] },
+    dueDate: { type: 'date' },
+    language: { type: 'string', required: true },
+    createdAt: { type: 'date', required: true },
+    updatedAt: { type: 'date', required: true },
+    order: { type: 'number', default: 0 },
+    boardId: { type: 'string', default: 'default' },
+  },
+  computedFields: {
+    ...computedFields,
+    id: {
+      type: 'string',
+      resolve: (doc) => doc._raw.flattenedPath.split('/').pop(),
+    },
+    isOverdue: {
+      type: 'boolean',
+      resolve: (doc) => {
+        if (!doc.dueDate) return false
+        return new Date(doc.dueDate) < new Date() && doc.status !== 'done'
+      },
+    },
+  },
+}))
+
+// Kanban Board 文档类型
+export const KanbanBoard = defineDocumentType(() => ({
+  name: 'KanbanBoard',
+  filePathPattern: 'kanban/boards/**/*.mdx',
+  contentType: 'mdx',
+  fields: {
+    title: { type: 'string', required: true },
+    language: { type: 'string', required: true },
+    columns: {
+      type: 'list',
+      of: { type: 'string' },
+      default: ['todo', 'in-progress', 'done']
+    },
+    createdAt: { type: 'date', required: true },
+  },
+  computedFields: {
+    ...computedFields,
+    id: {
+      type: 'string',
+      resolve: (doc) => doc._raw.flattenedPath.split('/').pop(),
+    },
+  },
+}))
+
 export const Blog = defineDocumentType(() => ({
   name: 'Blog',
   filePathPattern: 'blog/**/*.mdx',
@@ -182,7 +248,7 @@ export const Authors = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: 'data',
-  documentTypes: [Blog, Authors],
+  documentTypes: [Blog, Authors, KanbanTask, KanbanBoard],
   mdx: {
     cwd: process.cwd(),
     remarkPlugins: [

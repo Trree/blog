@@ -44,5 +44,18 @@
   "language": "Language",
   "french": "French",
   "english": "English",
-  "sidetoc": "On this page:"
+  "sidetoc": "On this page:",
+  "kanban": "Kanban Board",
+  "kanbanopen": "Open Kanban Board",
+  "kanbantodo": "To Do",
+  "kanbaninprogress": "In Progress",
+  "kanbandone": "Done",
+  "kanbanadd": "Add Task",
+  "kanbanedit": "Edit Task",
+  "kanbandelete": "Delete Task",
+  "kanbansave": "Save",
+  "kanbancancel": "Cancel",
+  "kanbanpriority": "Priority",
+  "kanbantags": "Tags",
+  "kanbanduedate": "Due Date"
 }

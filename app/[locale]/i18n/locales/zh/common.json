@@ -44,5 +44,18 @@
   "language": "语言",
   "chinese": "中文",
   "english": "英语",
-  "sidetoc": "本页内容："
+  "sidetoc": "本页内容：",
+  "kanban": "看板",
+  "kanbanopen": "打开看板",
+  "kanbantodo": "待办",
+  "kanbaninprogress": "进行中",
+  "kanbandone": "完成",
+  "kanbanadd": "添加任务",
+  "kanbanedit": "编辑任务",
+  "kanbandelete": "删除任务",
+  "kanbansave": "保存",
+  "kanbancancel": "取消",
+  "kanbanpriority": "优先级",
+  "kanbantags": "标签",
+  "kanbanduedate": "截止日期"
 }

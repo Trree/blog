@@ -12,6 +12,7 @@ import LangSwitch from '../langswitch'
 import Link from '../mdxcomponents/Link'
 import SearchButton from '../search/SearchButton'
 import ThemeSwitch from '../theme/ThemeSwitch'
+import { KanbanTrigger } from '../kanban/KanbanTrigger'
 import AuthorsMenu from './AuthorsMenu'
 import MobileNav from './MobileNav'
 
@@ -73,6 +74,7 @@ const Header = (): JSX.Element => {
             })}
           <AuthorsMenu className="hidden sm:block" />
           <SearchButton />
+          <KanbanTrigger />
           <ThemeSwitch />
           <LangSwitch />
           <MobileNav />

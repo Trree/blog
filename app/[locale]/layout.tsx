@@ -9,6 +9,7 @@ import { SearchProvider } from '@/components/search/SearchProvider'
 import SectionContainer from '@/components/SectionContainer'
 import { ThemeProvider } from '@/components/theme/ThemeContext'
 import ThemeScript from '@/components/theme/ThemeScript'
+import { KanbanProvider } from '@/components/kanban'
 import { maindescription, maintitle } from '@/data/localeMetadata'
 import siteMetadata from '@/data/siteMetadata'
 import { dir } from 'i18next'
@@ -118,6 +119,7 @@ export default async function RootLayout({
               <Footer />
             </div>
           </SectionContainer>
+          <KanbanProvider />
         </ThemeProvider>
       </body>
     </html>
