@@ -66,7 +66,7 @@ export default async function HomeLayout({
                 </Link>
               </div>
             </div>
-            <div className="rounded-2xl border border-white/40 bg-white/80 p-6 shadow-innerGlow backdrop-blur dark:border-white/[0.06] dark:bg-white/[0.05]">
+            <div className="rounded-2xl border border-white/40 p-6 shadow-innerGlow dark:border-white/[0.06]">
               <dl className="space-y-6">
                 <div>
                   <dt className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400">

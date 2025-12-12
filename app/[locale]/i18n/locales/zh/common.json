@@ -1,8 +1,4 @@
 {
-  "home": "首页",
-  "blog": "博客",
-  "tags": "标签",
-  "projects": "项目",
   "about": "关于",
   "lang": "语言",
   "showmenu": "显示菜单",
@@ -57,5 +53,21 @@
   "kanbancancel": "取消",
   "kanbanpriority": "优先级",
   "kanbantags": "标签",
-  "kanbanduedate": "截止日期"
+  "kanbanduedate": "截止日期",
+  "explore": "探索",
+  "nav": {
+    "home": "首页",
+    "blog": "博客",
+    "tags": "标签",
+    "filter": "筛选",
+    "projects": "项目"
+  },
+  "tags": {
+    "filterByTag": "按标签筛选",
+    "searchTags": "搜索标签...",
+    "popularTags": "热门标签",
+    "allTags": "所有标签",
+    "clearFilter": "清除筛选",
+    "noPosts": "没有找到标签"
+  }
 }

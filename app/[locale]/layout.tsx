@@ -5,6 +5,7 @@ import 'pliny/search/algolia.css'
 import TwSizeIndicator from '@/components/helper/TwSizeIndicator'
 import Footer from '@/components/navigation/Footer'
 import Header from '@/components/navigation/Header'
+import BottomNav from '@/components/navigation/BottomNav'
 import { SearchProvider } from '@/components/search/SearchProvider'
 import SectionContainer from '@/components/SectionContainer'
 import { ThemeProvider } from '@/components/theme/ThemeContext'
@@ -118,11 +119,12 @@ export default async function RootLayout({
               <span className="pointer-events-none absolute -bottom-12 right-0 -z-10 h-40 w-40 rounded-full bg-accent-400/20 blur-[140px] sm:h-56 sm:w-56 lg:h-64 lg:w-64" />
               <SearchProvider>
                 <Header />
-                <main className="flex-1">{children}</main>
+                <main className="flex-1 pb-20 sm:pb-0">{children}</main>
               </SearchProvider>
               <Footer />
             </div>
           </SectionContainer>
+          <BottomNav />
           <KanbanProvider />
         </ThemeProvider>
       </body>

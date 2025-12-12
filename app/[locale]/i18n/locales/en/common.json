@@ -1,8 +1,4 @@
 {
-  "home": "Home",
-  "blog": "Blog",
-  "tags": "Tags",
-  "projects": "Projects",
   "about": "About",
   "lang": "Language",
   "showmenu": "Show menu",
@@ -57,5 +53,21 @@
   "kanbancancel": "Cancel",
   "kanbanpriority": "Priority",
   "kanbantags": "Tags",
-  "kanbanduedate": "Due Date"
+  "kanbanduedate": "Due Date",
+  "explore": "Explore",
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "tags": "Tags",
+    "filter": "Filter",
+    "projects": "Projects"
+  },
+  "tags": {
+    "filterByTag": "Filter by Tag",
+    "searchTags": "Search tags...",
+    "popularTags": "Popular Tags",
+    "allTags": "All Tags",
+    "clearFilter": "Clear Filter",
+    "noPosts": "No tags found"
+  }
 }

@@ -11,6 +11,7 @@ import type { Blog } from 'contentlayer/generated'
 import { motion } from 'framer-motion'
 import type { CoreContent } from 'pliny/utils/contentlayer'
 import { formatDate } from 'pliny/utils/formatDate'
+import { useBottomSheetStore } from '@/components/util/useBottomSheetStore'
 import React, { useCallback, useMemo, useState } from 'react'
 import Pagination from './Pagination'
 
@@ -60,6 +61,7 @@ export default function ListLayoutWithTags({
   const sortedPosts = sortByDate(posts)
   const selectedTag = useTagStore((state) => state.selectedTag)
   const setSelectedTag = useTagStore((state) => state.setSelectedTag)
+  const openTagSheet = useBottomSheetStore((state) => state.openTagSheet)
 
   const filteredPosts = useMemo(() => {
     if (selectedTag) {
@@ -148,7 +150,7 @@ export default function ListLayoutWithTags({
         </div>
       </div>
       <div className="flex flex-col gap-8 lg:flex-row">
-        <aside className="order-2 flex w-full flex-col gap-4 rounded-3xl border border-white/30 bg-white/80 px-5 py-6 shadow-glow backdrop-blur dark:border-white/10 dark:bg-white/[0.04] lg:order-1 lg:w-80">
+        <aside className="hidden w-full flex-col gap-4 rounded-3xl border border-white/30 bg-white/80 px-5 py-6 shadow-glow backdrop-blur dark:border-white/10 dark:bg-white/[0.04] lg:order-1 lg:flex lg:w-80">
           <div className="flex items-center justify-between">
             <p className="text-xs uppercase tracking-[0.5em] text-gray-500 dark:text-gray-400">
               {t('poststagged')}
@@ -165,11 +167,32 @@ export default function ListLayoutWithTags({
           <ul className="space-y-2">{filteredTags}</ul>
         </aside>
         <div className="order-1 flex-1 lg:order-2">
+          {/* Floating Filter Button for Mobile */}
+          <button
+            onClick={openTagSheet}
+            className="fixed bottom-20 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full border border-primary-500/50 bg-primary-600 text-white shadow-lg transition hover:bg-primary-700 active:scale-95 lg:hidden dark:bg-primary-500 dark:hover:bg-primary-600"
+            aria-label="Filter by tags"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-6 w-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"
+              />
+            </svg>
+          </button>
           <motion.ul
             variants={container}
             initial="hidden"
             animate="show"
-            className="grid gap-6 md:grid-cols-2"
+            className="grid gap-6 grid-cols-1 md:grid-cols-2"
           >
             {displayPosts.map((post) => {
               const slug = post.slug as string
@@ -182,7 +205,7 @@ export default function ListLayoutWithTags({
               if (language === locale) {
                 return (
                   <motion.li variants={item} key={slug} className="h-full">
-                    <article className="group relative flex h-full flex-col justify-between rounded-3xl border border-white/20 bg-white/80 p-6 shadow-glow transition hover:-translate-y-1 hover:border-primary-300/60 dark:border-white/[0.08] dark:bg-white/[0.04]">
+                    <article className="group relative flex h-full flex-col justify-between rounded-3xl border border-white/20 bg-white/80 p-5 shadow-glow transition hover:-translate-y-1 hover:border-primary-300/60 dark:border-white/[0.08] dark:bg-white/[0.04] sm:p-6">
                       <div
                         className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100"
                         aria-hidden="true"
@@ -199,7 +222,7 @@ export default function ListLayoutWithTags({
                         </div>
                       </dl>
                       <div className="mt-5 flex-1 space-y-4">
-                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
                           <Link href={`/${locale}/blog/${slug}`}>{postTitle}</Link>
                         </h2>
                         <div className="text-gray-600 dark:text-gray-300">

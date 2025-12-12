@@ -57,7 +57,7 @@ const Header = (): JSX.Element => {
                     href={`/${locale}${link.href}`}
                     className="relative rounded-full px-4 py-2 text-sm font-semibold text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
                   >
-                    <span className="relative z-10">{t(`${link.title.toLowerCase()}`)}</span>
+                    <span className="relative z-10">{t(`nav.${link.title.toLowerCase()}`)}</span>
                     {isSelected ? (
                       <motion.span
                         layoutId="header-tab"
@@ -70,7 +70,7 @@ const Header = (): JSX.Element => {
               })}
           </nav>
           <AuthorsMenu className="hidden sm:block" />
-          <div className="flex items-center gap-2 rounded-full border border-gray-200/60 bg-white/70 px-3 py-1 shadow-innerGlow dark:border-white/[0.08] dark:bg-white/[0.02]">
+	  <div className="flex items-center gap-2 rounded-full border border-white/40 bg-white/80 px-3 py-1 shadow-innerGlow backdrop-blur-xl dark:border-white/[0.15] dark:bg-white/[0.04]">
             <SearchButton />
             <KanbanTrigger />
             <ThemeSwitch />
