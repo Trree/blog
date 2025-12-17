@@ -7,7 +7,7 @@ import { createTranslation } from '../i18n/server'
 import type { LocaleTypes } from '../i18n/settings'
 import { allBlogs } from 'contentlayer/generated'
 import { generateGraphData } from '@/lib/graph-utils'
-import GraphClientWrapper from './graph/GraphClientWrapper'
+import GraphCanvasWrapper from './graph/GraphCanvasWrapper'
 
 interface PageProps {
   params: Promise<{
@@ -76,7 +76,7 @@ export default async function Page({ params }: PageProps): Promise<ReactElement>
               : 'Visualize connections between posts through shared tags'}
           </p>
         </div>
-        <GraphClientWrapper graphData={graphData} locale={locale} />
+        <GraphCanvasWrapper graphData={graphData} locale={locale} />
       </div>
     </div>
   )
